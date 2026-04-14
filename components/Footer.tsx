@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin, Linkedin, Facebook, Twitter } from 'lucide-react';
 
 export default function Footer() {
@@ -8,11 +9,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Column 1: Logo & About */}
           <div>
-            <div className="flex items-center gap-2 mb-4 font-bold text-lg">
-              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                D
-              </div>
-              <span>DIKSHA COOL</span>
+            <div className="flex items-center gap-3 mb-4 font-bold text-lg">
+              <Image
+                src="/page_1-removebg-preview (1).png"
+                alt="Anshika logo"
+                width={96}
+                height={96}
+                className="h-14 w-auto object-contain"
+              />
+              <span></span>
             </div>
             <p className="text-gray-300 text-sm mb-4">
               Leading provider of refrigerated container services and cold logistics solutions across India.
@@ -32,7 +37,7 @@ export default function Footer() {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="font-bold text-lg mb-6">Quick Links</h4>
+            <h4 className="font-bold text-lg mb-6 text-white">Quick Links</h4>
             <ul className="space-y-3 text-gray-300">
               <li>
                 <Link href="/" className="hover:text-primary transition-colors">
@@ -54,17 +59,12 @@ export default function Footer() {
                   Projects
                 </Link>
               </li>
-              <li>
-                <Link href="/blog" className="hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
             </ul>
           </div>
 
           {/* Column 3: Services */}
           <div>
-            <h4 className="font-bold text-lg mb-6">Services</h4>
+            <h4 className="font-bold text-lg mb-6 text-white">Services</h4>
             <ul className="space-y-3 text-gray-300">
               <li>
                 <Link href="/services" className="hover:text-primary transition-colors">
@@ -96,7 +96,7 @@ export default function Footer() {
 
           {/* Column 4: Contact */}
           <div>
-            <h4 className="font-bold text-lg mb-6">Contact Info</h4>
+            <h4 className="font-bold text-lg mb-6 text-white">Contact Info</h4>
             <div className="space-y-4 text-gray-300">
               <div className="flex gap-3">
                 <MapPin size={20} className="text-primary flex-shrink-0 mt-1" />
@@ -113,30 +113,17 @@ export default function Footer() {
               </div>
               <div className="flex gap-3">
                 <Mail size={20} className="text-primary flex-shrink-0" />
-                <a href="mailto:info@dikshalogistics.com" className="hover:text-primary transition-colors">
-                  info@dikshalogistics.com
+                <a href="mailto:info@accs.in.net" className="hover:text-primary transition-colors">
+                  info@accs.in.net
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Newsletter */}
-        <div className="border-t border-gray-700 pt-8 mb-8">
-          <h4 className="font-bold mb-4">Subscribe to Our Newsletter</h4>
-          <div className="flex gap-2 max-w-md">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-1 px-4 py-2 bg-gray-800 text-white rounded border border-gray-700 focus:border-primary focus:outline-none"
-            />
-            <button className="btn-primary px-6">Subscribe</button>
-          </div>
-        </div>
-
         {/* Copyright */}
         <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Diksha Cool Container Services. All rights reserved.</p>
+          <p>&copy; 2024 Anshika Cool Container Services. All rights reserved.</p>
         </div>
       </div>
     </footer>

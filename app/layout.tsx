@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Diksha Cool Container Services | Cold Logistics',
+  title: 'Anshika Cool Container Services | Cold Logistics',
   description: 'Professional refrigerated container transport and cold logistics solutions across India. Reliable, temperature-controlled shipping for perishables, pharmaceuticals, and more.',
   generator: 'v0.app',
   icons: {

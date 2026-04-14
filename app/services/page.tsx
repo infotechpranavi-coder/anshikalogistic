@@ -43,8 +43,8 @@ export default function ServicesPage() {
                     <Mail className="text-primary flex-shrink-0 mt-1" size={20} />
                     <div>
                       <p className="text-sm text-gray-600 font-semibold">Email Us</p>
-                      <a href="mailto:info@dikshalogistics.com" className="text-primary font-bold">
-                        info@dikshalogistics.com
+                      <a href="mailto:info@accs.in.net" className="text-primary font-bold">
+                        info@accs.in.net
                       </a>
                     </div>
                   </div>

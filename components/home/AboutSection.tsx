@@ -71,7 +71,7 @@ export default function AboutSection() {
               Excellence in Cold Logistics
             </h2>
             <p className="text-lg text-text-body mb-8 leading-relaxed">
-              With over 15 years of experience in the cold logistics industry, Diksha Cool Container Services has established itself as a trusted partner for businesses requiring reliable refrigerated transport and storage solutions. Our commitment to quality and customer satisfaction drives everything we do.
+              With over 15 years of experience in the cold logistics industry, Anshika Cool Container Services has established itself as a trusted partner for businesses requiring reliable refrigerated transport and storage solutions. Our commitment to quality and customer satisfaction drives everything we do.
             </p>
 
             {/* Stats */}

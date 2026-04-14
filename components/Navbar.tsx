@@ -22,7 +22,6 @@ export default function Navbar() {
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
     { name: 'Projects', href: '/projects' },
-    { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -41,7 +40,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2 font-bold text-xl">
               <Image
                 src="/page_1-removebg-preview (1).png"
-                alt="Diksha Cool logo"
+                alt="Anshika logo"
                 width={86}
                 height={86}
                 className="h-14 w-auto object-contain"

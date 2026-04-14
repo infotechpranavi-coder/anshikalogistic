@@ -230,7 +230,7 @@ export const blogPosts: BlogPost[] = [
 export const testimonials: Testimonial[] = [
   {
     id: '1',
-    quote: 'Diksha Cool Container Services transformed our supply chain. Their reliability and professionalism are unmatched in the industry.',
+    quote: 'Anshika Cool Container Services transformed our supply chain. Their reliability and professionalism are unmatched in the industry.',
     author: 'Vikram Singh',
     designation: 'Supply Chain Manager',
     company: 'Fresh Foods India',

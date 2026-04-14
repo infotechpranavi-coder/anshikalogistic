@@ -17,8 +17,8 @@ const contactInfo = [
   {
     icon: Mail,
     title: 'Email',
-    details: 'info@dikshalogistics.com',
-    href: 'mailto:info@dikshalogistics.com',
+    details: 'info@accs.in.net',
+    href: 'mailto:info@accs.in.net',
   },
   {
     icon: Clock,
