@@ -9,15 +9,18 @@ import CTABanner from '@/components/home/CTABanner';
 
 export default function Home() {
   return (
-    <>
+    <div className="relative">
       <HeroSlider />
-      <FeatureCards />
-      <AboutSection />
-      <ServicesSection />
-      <WorkProcess />
-      <FleetProducts />
-      <TestimonialsSection />
-      <CTABanner />
-    </>
+      {/* Slides over the sticky hero on scroll */}
+      <div className="relative z-10 bg-white">
+        <FeatureCards />
+        <AboutSection />
+        <ServicesSection />
+        <WorkProcess />
+        <FleetProducts />
+        <TestimonialsSection />
+        <CTABanner />
+      </div>
+    </div>
   );
 }

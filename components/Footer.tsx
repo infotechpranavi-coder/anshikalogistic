@@ -4,14 +4,14 @@ import { Mail, Phone, MapPin, Linkedin, Facebook, Twitter } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-dark-navy text-white py-16">
+    <footer className="relative z-10 bg-dark-navy text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Column 1: Logo & About */}
           <div>
             <div className="flex items-center gap-3 mb-4 font-bold text-lg">
               <Image
-                src="/page_1-removebg-preview (1).png"
+                src="/logo/anishka%20logists.jpeg"
                 alt="Anshika logo"
                 width={96}
                 height={96}

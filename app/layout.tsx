@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/logo/anishka%20logists.jpeg',
+        type: 'image/jpeg',
       },
     ],
   },

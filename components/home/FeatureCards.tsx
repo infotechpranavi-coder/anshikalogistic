@@ -30,7 +30,7 @@ export default function FeatureCards() {
   const isInView = useInView(ref, { once: false, amount: 0.3 });
 
   return (
-    <div className="relative -mt-32 mb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative -mt-20 mb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ref" ref={ref}>
         {features.map((feature, idx) => (
           <motion.div
