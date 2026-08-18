@@ -24,9 +24,9 @@ export default function BlogPage() {
     <>
       <PageHeader title="Blog & News" />
 
-      <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <section className="section-padding bg-surface-muted">
+        <div className="section-container">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Search */}

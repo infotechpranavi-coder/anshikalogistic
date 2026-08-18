@@ -18,7 +18,7 @@ export default function BlogPreview() {
       <div className="max-w-7xl mx-auto">
         {/* Section Label */}
         <div className="mb-12">
-          <p className="section-label">06 _ Blog & News</p>
+          <p className="section-label">Blog & News</p>
         </div>
 
         <div className="flex justify-between items-end mb-12">

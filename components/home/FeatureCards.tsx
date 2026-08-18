@@ -1,66 +1,66 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { Globe, Thermometer, Truck, ShieldCheck } from 'lucide-react';
 
-const features = [
+const highlights = [
   {
-    number: '01',
-    title: 'Real-time Tracking',
-    description: 'GPS-enabled containers with live tracking',
-    progress: 95,
+    icon: Globe,
+    title: 'Pan-India Cold Chain',
+    text: 'Integrated logistics from metros to Tier-2 and Tier-3 locations, with one accountable network.',
   },
   {
-    number: '02',
-    title: 'Temperature Control',
-    description: 'Precise temperature management systems',
-    progress: 98,
+    icon: Thermometer,
+    title: 'Live Temperature Control',
+    text: 'Real-time monitoring at ±0.5°C accuracy, with refrigeration systems matched to cargo type.',
   },
   {
-    number: '03',
-    title: 'Certified Partners',
-    description: 'ISO certified logistics providers',
-    progress: 100,
+    icon: Truck,
+    title: 'Right-Sized Reefer Fleet',
+    text: 'Dedicated vehicles from 9 ft to 24 ft, so every load gets the capacity and route it needs.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Traceable On-Time Dispatch',
+    text: '99.8% on-time delivery with documented handling and 24/7 operational support.',
   },
 ];
 
 export default function FeatureCards() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
-
   return (
-    <div className="relative -mt-20 mb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ref" ref={ref}>
-        {features.map((feature, idx) => (
-          <motion.div
-            key={feature.number}
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.6, delay: idx * 0.15 }}
-            className="bg-white rounded-lg p-8 shadow-lg hover:shadow-2xl transition-shadow"
-          >
-            <div className="text-5xl font-bold text-primary mb-4">
-              {feature.number}
-            </div>
-            <h3 className="text-xl font-bold text-text-dark mb-3">
-              {feature.title}
-            </h3>
-            <p className="text-gray-600 mb-6">{feature.description}</p>
-            
-            {/* Progress Bar */}
-            <div className="relative h-2 bg-light-gray rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-primary rounded-full"
-                initial={{ width: 0 }}
-                animate={isInView ? { width: `${feature.progress}%` } : { width: 0 }}
-                transition={{ duration: 1.5, delay: idx * 0.15 + 0.3 }}
-              />
-            </div>
-            <p className="text-sm text-gray-500 mt-3">{feature.progress}% Efficiency</p>
-          </motion.div>
-        ))}
+    <section className="relative -mt-4 bg-white pt-8 pb-12 sm:-mt-10 sm:pt-12 sm:pb-16 md:pb-20">
+      <div className="section-container">
+        <div className="mx-auto mb-8 max-w-2xl text-center md:mb-10">
+          <p className="section-label mb-3 justify-center">Why Choose Anshika</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-text-dark md:text-4xl md:leading-tight">
+            Built for outcomes, not just movement
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-text-body">
+            Nationwide reach, precise temperature control, and dependable delivery —
+            engineered around the cargo you cannot afford to lose.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          {highlights.map((item, idx) => (
+            <motion.article
+              key={item.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative overflow-hidden rounded-2xl bg-primary p-5 text-white shadow-[0_14px_32px_rgba(232,33,42,0.22)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(232,33,42,0.32)] sm:p-6"
+            >
+              <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/10" />
+              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white">
+                <item.icon size={20} strokeWidth={1.75} />
+              </span>
+              <h3 className="text-[15px] font-semibold text-white md:text-base">{item.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-white/90">{item.text}</p>
+            </motion.article>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

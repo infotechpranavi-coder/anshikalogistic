@@ -23,7 +23,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-96 md:h-[500px] w-full overflow-hidden bg-gray-300">
+      <section className="relative h-64 w-full overflow-hidden bg-gray-300 md:h-[500px]">
         <Image
           src={post.image}
           alt={post.title}
@@ -32,13 +32,13 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           priority
         />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 text-white max-w-7xl mx-auto">
+        <div className="absolute inset-0 mx-auto flex max-w-7xl flex-col justify-end p-5 text-white sm:p-8 md:p-12">
           <div className="mb-4">
             <span className="bg-primary px-4 py-1 rounded-full text-sm font-semibold inline-block">
               {post.category}
             </span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
+          <h1 className="mb-4 text-2xl font-bold sm:text-4xl md:text-5xl">{post.title}</h1>
         </div>
       </section>
 

@@ -1,120 +1,80 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { services } from '@/lib/data';
+import WorldMapOverlay from '@/components/WorldMapOverlay';
 
 export default function ServicesSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
-  const [scroll, setScroll] = useState(0);
-
-  const scrollAmount = 350;
-  const handleScroll = (direction: 'left' | 'right') => {
-    const newScroll = direction === 'left' ? scroll - scrollAmount : scroll + scrollAmount;
-    setScroll(newScroll);
-  };
-
   return (
-    <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-dark-navy" ref={ref}>
-      <div className="max-w-7xl mx-auto">
-        {/* Section Label */}
-        <div className="mb-12">
-          <p className="section-label">02 _ What We Offer</p>
-        </div>
+    <section className="relative overflow-hidden bg-dark-navy py-10 md:py-12">
+      <div className="pointer-events-none absolute -left-24 top-0 h-56 w-56 rounded-full bg-primary/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
+      <WorldMapOverlay className="opacity-[0.16]" showMarkers />
 
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white max-w-2xl">
-            Comprehensive Cold Logistics Services
+      <div className="section-container relative">
+        <div className="mx-auto mb-7 max-w-2xl text-center md:mb-8">
+          <p className="section-label mb-2 justify-center">What We Offer</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-white md:text-3xl">
+            Services We Offer
           </h2>
-          <div className="hidden md:flex gap-4">
-            <button
-              onClick={() => handleScroll('left')}
-              className="w-12 h-12 rounded-full bg-primary hover:opacity-80 text-white flex items-center justify-center transition-all"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button
-              onClick={() => handleScroll('right')}
-              className="w-12 h-12 rounded-full bg-primary hover:opacity-80 text-white flex items-center justify-center transition-all"
-            >
-              <ChevronRight size={24} />
-            </button>
-          </div>
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-white/65 md:text-base">
+            End-to-end cold-chain logistics across India for perishable and temperature-sensitive cargo.
+          </p>
         </div>
 
-        {/* Services Carousel */}
-        <div className="relative overflow-x-auto scrollbar-hide">
-          <motion.div
-            className="flex gap-6 pb-4"
-            animate={{ x: -scroll }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          >
-            {services.map((service, idx) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="flex-shrink-0 w-80 bg-gray-900 rounded-lg overflow-hidden hover:shadow-xl transition-shadow"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 right-4 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-bold">
-                    {service.number}
-                  </div>
-                </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-5">
+          {services.map((service, idx) => (
+            <motion.article
+              key={service.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-[0_10px_28px_rgba(0,0,0,0.16)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)]"
+            >
+              <div className="relative h-32 overflow-hidden sm:h-36">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  className="object-cover transition duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                />
+              </div>
 
-                {/* Content */}
-                <div className="p-6 text-white">
-                  <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                  <p className="text-gray-300 text-sm mb-4">{service.description}</p>
-
-                  {/* Features */}
-                  <ul className="space-y-2 text-sm">
-                    {service.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-primary font-bold">-</span>
-                        <span className="text-gray-300">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href={`/services/${service.id}`}
-                    className="inline-flex mt-4 text-primary font-semibold hover:opacity-70 transition-opacity"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              <div className="flex flex-1 flex-col px-4 py-4">
+                <p className="mb-1.5 text-[11px] font-semibold tracking-[0.16em] text-primary">
+                  {service.number}
+                </p>
+                <h3 className="mb-1.5 text-[15px] font-semibold leading-snug text-text-dark">
+                  {service.title}
+                </h3>
+                <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-text-body">
+                  {service.description}
+                </p>
+                <Link
+                  href={`/services/${service.id}`}
+                  className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-primary transition group-hover:gap-1.5"
+                >
+                  View Details
+                  <ArrowUpRight size={14} />
+                </Link>
+              </div>
+            </motion.article>
+          ))}
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden flex gap-4 mt-6 justify-center">
-          <button
-            onClick={() => handleScroll('left')}
-            className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center"
+        <div className="mt-7 text-center">
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--primary-dark)]"
           >
-            <ChevronLeft size={20} />
-          </button>
-          <button
-            onClick={() => handleScroll('right')}
-            className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center"
-          >
-            <ChevronRight size={20} />
-          </button>
+            View All Services
+            <ArrowUpRight size={15} />
+          </Link>
         </div>
       </div>
     </section>

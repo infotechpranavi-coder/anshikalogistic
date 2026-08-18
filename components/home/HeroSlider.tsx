@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const slides = [
   {
@@ -14,7 +14,10 @@ const slides = [
     accent: 'Container Transport',
     description:
       'Temperature-controlled logistics built for perishables, pharma, and time-critical cargo across India.',
-    image: '/images/hero-1.jpg',
+    image: '/banners/refie 3.jpg',
+    imagePosition: '52% center',
+    imageClassName: 'scale-105',
+    flipHorizontal: true,
   },
   {
     id: 2,
@@ -23,7 +26,7 @@ const slides = [
     accent: 'Cold Logistics',
     description:
       'Certified handling with live temperature logs and secure transit for sensitive medical shipments.',
-    image: '/images/hero-2.jpg',
+    image: '/banners/pharma cold 2.png',
   },
   {
     id: 3,
@@ -32,7 +35,8 @@ const slides = [
     accent: 'Solutions',
     description:
       'Modern warehousing for perishable goods—precise climate control from dock to delivery.',
-    image: '/images/hero-3.jpg',
+    image: '/banners/refieg cold storage.jpg',
+    flipHorizontal: true,
   },
 ];
 
@@ -63,8 +67,10 @@ export default function HeroSlider() {
   const next = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
+  const slide = slides[current];
+
   return (
-    <div className="sticky top-0 z-0 h-[100svh] w-full overflow-hidden">
+    <div className="relative z-0 h-[50svh] w-full overflow-hidden md:sticky md:top-0 md:h-[100svh]">
       {/* Background + scroll motion */}
       <motion.div
         style={{ scale, y, opacity }}
@@ -78,14 +84,37 @@ export default function HeroSlider() {
             animate={{ opacity: index === current ? 1 : 0 }}
             transition={{ duration: 0.9, ease: 'easeInOut' }}
           >
-            <Image
-              src={slide.image}
-              alt={`${slide.title} ${slide.accent}`}
-              fill
-              className="object-cover object-center"
-              priority={index === 0}
-              sizes="100vw"
-            />
+            {slide.imageLayout === 'right' ? (
+              <div className="absolute inset-0 bg-[#0e101c]">
+                <div
+                  className={
+                    slide.imagePanelClass ??
+                    'absolute inset-y-0 right-0 w-full sm:w-[72%] md:w-[66%] lg:w-[60%]'
+                  }
+                >
+                  <Image
+                    src={slide.image}
+                    alt={`${slide.title} ${slide.accent}`}
+                    fill
+                    className={`object-cover${slide.flipHorizontal ? ' -scale-x-100' : ''}`}
+                    style={{ objectPosition: slide.imagePosition ?? 'center' }}
+                    priority={index === 0}
+                    quality={75}
+                    sizes="(max-width: 640px) 100vw, 60vw"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={slide.image}
+                alt={`${slide.title} ${slide.accent}`}
+                fill
+                className={`object-cover object-center${slide.flipHorizontal ? ' -scale-x-100' : ''} ${slide.imageClassName ?? ''}`}
+                style={{ objectPosition: slide.imagePosition ?? 'center' }}
+                priority={index === 0}
+                sizes="100vw"
+              />
+            )}
           </motion.div>
         ))}
       </motion.div>
@@ -95,7 +124,14 @@ export default function HeroSlider() {
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            'linear-gradient(90deg, rgba(14,16,28,0.92) 0%, rgba(14,16,28,0.78) 28%, rgba(14,16,28,0.42) 52%, rgba(14,16,28,0.12) 72%, rgba(14,16,28,0) 100%)',
+                    'linear-gradient(90deg, rgba(14,16,28,0.92) 0%, rgba(14,16,28,0.82) 28%, rgba(14,16,28,0.52) 52%, rgba(14,16,28,0.2) 72%, rgba(14,16,28,0.12) 100%)',
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-[1] md:hidden"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(14,16,28,0.58) 0%, rgba(14,16,28,0.72) 42%, rgba(14,16,28,0.88) 100%)',
         }}
       />
       {/* Soft bottom fade for controls */}
@@ -107,63 +143,56 @@ export default function HeroSlider() {
         }}
       />
 
-      {/* Left-aligned content */}
-      <div className="pointer-events-none absolute inset-0 z-30 flex items-center">
-        <div className="relative mx-auto w-full max-w-7xl px-6 pt-24 pb-28 sm:px-8 lg:px-12">
-          <div className="relative min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]">
-            {slides.map((slide, index) => (
-              <motion.div
-                key={slide.id}
-                initial={false}
-                animate={{
-                  opacity: index === current ? 1 : 0,
-                  x: index === current ? 0 : -24,
-                }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                className={`absolute inset-0 max-w-xl lg:max-w-2xl ${
-                  index === current ? 'pointer-events-auto' : 'pointer-events-none'
-                }`}
-                aria-hidden={index !== current}
-              >
-                <p className="mb-5 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/75 md:text-xs">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
-                  {slide.eyebrow}
-                </p>
+      {/* Left-aligned content — single slide at a time */}
+      <div className="pointer-events-none absolute inset-0 z-30 flex items-start md:items-center md:-translate-y-14">
+        <div className="mx-auto w-full max-w-7xl px-7 pt-[5.75rem] pb-16 sm:px-8 sm:pt-32 md:px-12 md:pt-20 md:pb-20">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="pointer-events-auto w-[88%] max-w-[20.5rem] sm:w-full sm:max-w-xl lg:max-w-2xl"
+            >
+              <p className="mb-1.5 inline-flex max-w-full items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80 sm:mb-4 sm:text-[11px] md:text-xs md:tracking-[0.24em]">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
+                {slide.eyebrow}
+              </p>
 
-                <h1 className="mb-6 text-left font-bold leading-[0.95] tracking-tight text-white">
-                  <span className="block text-[2.6rem] sm:text-5xl md:text-6xl lg:text-[4.5rem]">
-                    {slide.title}
-                  </span>
-                  <span className="mt-1 block font-hero-accent text-[2.75rem] italic font-normal leading-none text-primary sm:text-5xl md:text-6xl lg:text-[4.65rem]">
-                    {slide.accent}
-                  </span>
-                </h1>
+              <h1 className="mb-1.5 text-left tracking-tight text-white sm:mb-5">
+                <span className="block text-[1.55rem] font-bold leading-[1.08] sm:text-5xl md:text-6xl lg:text-[4rem]">
+                  {slide.title}
+                </span>
+                <span className="mt-0.5 block font-hero-accent text-[1.45rem] font-normal italic leading-[1.08] text-primary sm:text-5xl md:text-6xl lg:text-[4.1rem]">
+                  {slide.accent}
+                </span>
+              </h1>
 
-                <p className="mb-9 max-w-md text-left text-base leading-relaxed text-white/80 sm:text-lg md:mb-10 md:max-w-lg md:text-xl md:leading-relaxed">
-                  {slide.description}
-                </p>
+              <p className="mb-2.5 line-clamp-2 max-w-lg text-xs leading-relaxed text-white/75 sm:mb-4 sm:line-clamp-none sm:text-base md:mb-8 md:text-lg">
+                {slide.description}
+              </p>
 
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition hover:bg-[#d11c24] hover:shadow-primary/35 sm:px-8 sm:py-4 sm:text-base"
-                  >
-                    Get Free Quote
-                  </Link>
-                  <Link
-                    href="/services"
-                    className="group inline-flex items-center gap-2 rounded-md border border-white/60 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white hover:bg-white hover:text-dark-navy sm:px-8 sm:py-4 sm:text-base"
-                  >
-                    View Details
-                    <ArrowRight
-                      size={18}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              <div className="flex w-full flex-row flex-wrap items-center gap-2 sm:gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-white shadow-lg shadow-black/20 transition hover:bg-[var(--primary-dark)] sm:px-6 sm:py-3 sm:text-sm md:px-7 md:py-3.5 md:text-base"
+                >
+                  Enquire Now
+                </Link>
+                <Link
+                  href="/services"
+                  className="group inline-flex items-center justify-center gap-1.5 rounded-lg border border-white/50 bg-white/10 px-3.5 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:border-white hover:bg-white/20 sm:px-6 sm:py-3 sm:text-sm md:px-7 md:py-3.5 md:text-base"
+                >
+                  View Details
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
@@ -186,15 +215,15 @@ export default function HeroSlider() {
       </div>
 
       {/* Bottom bar: stats · counter · dots */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 px-6 pb-7 sm:px-8 lg:px-12">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex gap-8 sm:gap-12">
+      <div className="absolute bottom-8 left-0 right-0 z-20 px-7 pr-[4.75rem] sm:bottom-20 sm:px-8 sm:pr-8 md:bottom-24 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+          <div className="flex gap-4 sm:gap-12">
             {stats.map((stat) => (
               <div key={stat.label} className="text-left">
-                <p className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+                <p className="text-base font-bold tracking-tight text-white sm:text-2xl md:text-3xl">
                   {stat.value}
                 </p>
-                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55 md:text-xs">
+                <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/55 md:text-xs md:tracking-[0.22em]">
                   {stat.label}
                 </p>
               </div>

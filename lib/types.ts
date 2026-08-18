@@ -39,7 +39,6 @@ export interface Testimonial {
   designation: string;
   company: string;
   rating: number;
-  avatar: string;
 }
 
 export interface FleetProduct {
@@ -47,11 +46,22 @@ export interface FleetProduct {
   name: string;
   image: string;
   category: string;
+  description: string;
+  features: string[];
   specs: {
     capacity: string;
     dimensions: string;
     temperature: string;
   };
+}
+
+export interface ServiceCategory {
+  id: string;
+  title: string;
+  description: string;
+  overview: string;
+  features: string[];
+  image: string;
 }
 
 export interface ContactFormData {

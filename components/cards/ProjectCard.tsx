@@ -2,54 +2,34 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Project } from '@/lib/types';
 
 export default function ProjectCard({ id, title, image, category, description }: Project) {
   return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all bg-gray-900"
-    >
-      {/* Image */}
-      <div className="relative h-72 overflow-hidden">
+    <article className="group overflow-hidden rounded-2xl bg-white shadow-[0_10px_32px_rgba(26,26,46,0.07)] ring-1 ring-black/[0.04] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(26,26,46,0.1)]">
+      <div className="relative h-48 overflow-hidden">
         <Image
           src={image}
           alt={title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          className="object-cover transition duration-500 group-hover:scale-105"
         />
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300" />
+        <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+          {category}
+        </span>
       </div>
-
-      {/* Content Overlay */}
-      <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-        {/* Category Badge */}
-        <div className="mb-4">
-          <span className="bg-primary px-4 py-1 rounded-full text-sm font-semibold inline-block">
-            {category}
-          </span>
-        </div>
-
-        {/* Title & CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileHover={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+      <div className="p-5">
+        <h3 className="mb-2 text-lg font-semibold text-text-dark">{title}</h3>
+        <p className="mb-4 text-sm leading-relaxed text-text-body">{description}</p>
+        <Link
+          href={`/projects/${id}`}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
         >
-          <h3 className="text-xl font-bold mb-2">{title}</h3>
-          <p className="text-sm text-gray-200 mb-4">{description}</p>
-          <Link
-            href={`/projects/${id}`}
-            className="inline-flex items-center gap-2 text-primary font-bold hover:opacity-70 transition-opacity"
-          >
-            View Details
-            <ArrowRight size={16} />
-          </Link>
-        </motion.div>
+          View Details
+          <ArrowUpRight size={15} />
+        </Link>
       </div>
-    </motion.div>
+    </article>
   );
 }

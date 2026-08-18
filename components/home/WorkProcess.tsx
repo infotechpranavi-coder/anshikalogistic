@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Package, Truck, BarChart3, CheckCircle } from 'lucide-react';
 
 const steps = [
@@ -9,100 +8,71 @@ const steps = [
     icon: Package,
     number: '01',
     title: 'Order Placement',
-    description: 'Submit your shipment details and requirements',
+    description: 'Share shipment details, cargo type, and temperature requirements.',
   },
   {
     icon: Truck,
     number: '02',
     title: 'Pickup & Loading',
-    description: 'We pick up your cargo and load safely',
+    description: 'Our team collects and loads cargo with certified cold-chain protocols.',
   },
   {
     icon: BarChart3,
     number: '03',
-    title: 'Real-time Tracking',
-    description: 'Monitor your shipment throughout transit',
+    title: 'Live Tracking',
+    description: 'Monitor location and temperature in real time throughout transit.',
   },
   {
     icon: CheckCircle,
     number: '04',
     title: 'Safe Delivery',
-    description: 'Deliver your goods in perfect condition',
+    description: 'Goods delivered on schedule, within spec, with full documentation.',
   },
 ];
 
-const stats = [
-  { label: 'On-time Delivery Rate', value: '99.8%' },
-  { label: 'Temperature Accuracy', value: '±0.5°C' },
-];
-
 export default function WorkProcess() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
-
   return (
-    <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-light-gray" ref={ref}>
-      <div className="max-w-7xl mx-auto">
-        {/* Section Label */}
-        <div className="mb-12">
-          <p className="section-label">03 _ Work Process</p>
+    <section className="bg-light-gray py-10 md:py-14">
+      <div className="section-container">
+        <div className="mx-auto mb-8 max-w-2xl text-center md:mb-10">
+          <p className="section-label mb-2 justify-center">Work Process</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-text-dark md:text-3xl lg:text-4xl">
+            How We Deliver Excellence
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-text-body md:text-base">
+            A four-step process built for reliability, transparency, and cold-chain integrity.
+          </p>
         </div>
 
-        <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-16">
-          How We Deliver Excellence
-        </h2>
+        <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          <div className="pointer-events-none absolute left-[10%] right-[10%] top-10 hidden h-px bg-primary/20 lg:block" />
 
-        {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {steps.map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="relative"
+            <motion.article
+              key={step.number}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative overflow-hidden rounded-2xl bg-white p-5 ring-1 ring-black/[0.04] transition duration-300 hover:-translate-y-1.5 hover:bg-primary hover:shadow-[0_18px_40px_rgba(232,33,42,0.28)] hover:ring-primary"
             >
-              <div className="bg-white rounded-lg p-8 h-full">
-                {/* Icon */}
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-4">
-                  <step.icon size={32} />
-                </div>
+              <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/10 transition group-hover:bg-white/10" />
 
-                {/* Number Badge */}
-                <div className="absolute -top-4 -right-4 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-bold">
+              <div className="relative mb-4 flex items-center justify-between">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white transition duration-300 group-hover:bg-white group-hover:text-primary">
+                  <step.icon size={22} strokeWidth={1.75} />
+                </span>
+                <span className="text-sm font-bold tracking-[0.16em] text-primary/70 transition group-hover:text-white/80">
                   {step.number}
-                </div>
-
-                {/* Content */}
-                <h3 className="text-xl font-bold text-text-dark mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-text-body">{step.description}</p>
+                </span>
               </div>
-
-              {/* Connecting Line (hidden on last item) */}
-              {idx < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-12 w-12 h-0.5 bg-gradient-to-r from-primary to-transparent" />
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {stats.map((stat, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: idx === 0 ? -40 : 40 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: idx === 0 ? -40 : 40 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-white rounded-lg p-8 flex items-center justify-between border-l-4 border-primary"
-            >
-              <div>
-                <p className="text-gray-600 font-semibold">{stat.label}</p>
-              </div>
-              <p className="text-4xl font-bold text-primary">{stat.value}</p>
-            </motion.div>
+              <h3 className="relative mb-1.5 text-base font-semibold text-text-dark transition group-hover:text-white">
+                {step.title}
+              </h3>
+              <p className="relative text-sm leading-relaxed text-text-body transition group-hover:text-white/85">
+                {step.description}
+              </p>
+            </motion.article>
           ))}
         </div>
       </div>

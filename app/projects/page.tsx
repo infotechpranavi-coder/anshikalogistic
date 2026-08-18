@@ -20,8 +20,8 @@ export default function ProjectsPage() {
     <>
       <PageHeader title="Our Projects" />
 
-      <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="section-padding bg-surface-muted">
+        <div className="section-container">
           {/* Filter Tabs */}
           <div className="flex flex-wrap gap-4 mb-12 justify-center">
             {categories.map((category) => (

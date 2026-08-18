@@ -1,129 +1,147 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone, MapPin, Linkedin, Facebook, Twitter } from 'lucide-react';
+import WorldMapOverlay from '@/components/WorldMapOverlay';
+import { contact } from '@/lib/contact';
+
+const quickLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'Industries', href: '/industries' },
+  { label: 'Fleet', href: '/fleet' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const serviceLinks = [
+  { label: 'Reefer Transport', href: '/services/1' },
+  { label: 'Cold Storage', href: '/services/4' },
+  { label: 'Pharma Logistics', href: '/services' },
+  { label: 'Fleet Solutions', href: '/fleet' },
+  { label: 'Pan-India Coverage', href: '/services' },
+];
+
+const socials = [
+  { Icon: Linkedin, label: 'LinkedIn' },
+  { Icon: Facebook, label: 'Facebook' },
+  { Icon: Twitter, label: 'Twitter' },
+];
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 bg-dark-navy text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Column 1: Logo & About */}
-          <div>
-            <div className="flex items-center gap-3 mb-4 font-bold text-lg">
+    <footer className="relative z-10 overflow-hidden bg-dark-navy text-white">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#12121f] via-dark-navy to-[#1e1630]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl" />
+      <WorldMapOverlay className="opacity-[0.22]" showMarkers centered />
+
+      <div className="section-container relative py-10 pb-24 md:py-12 md:pb-12">
+        <div className="mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <div className="mb-4 inline-flex rounded-lg bg-white px-3 py-2">
               <Image
-                src="/logo/anishka%20logists.jpeg"
-                alt="Anshika logo"
-                width={96}
-                height={96}
-                className="h-14 w-auto object-contain"
+                src="/logo/anshika%20logictics.png"
+                alt="Anshika Logistics"
+                width={240}
+                height={100}
+                className="h-[4.5rem] w-auto object-contain md:h-[5.5rem]"
               />
-              <span></span>
             </div>
-            <p className="text-gray-300 text-sm mb-4">
-              Leading provider of refrigerated container services and cold logistics solutions across India.
+            <p className="mb-5 max-w-xs text-sm leading-relaxed text-white/65">
+              Refrigerated container transport and cold-chain logistics across India.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-primary transition-colors">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Twitter size={20} />
-              </a>
+            <div className="flex gap-2.5">
+              {socials.map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white transition hover:border-primary hover:bg-primary"
+                >
+                  <Icon size={16} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">Quick Links</h4>
-            <ul className="space-y-3 text-gray-300">
-              <li>
-                <Link href="/" className="hover:text-primary transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-primary transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-primary transition-colors">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="hover:text-primary transition-colors">
-                  Projects
-                </Link>
-              </li>
+            <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              Explore
+            </h4>
+            <p className="mb-4 text-base font-semibold text-white">Quick Links</p>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/65 transition hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: Services */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">Services</h4>
-            <ul className="space-y-3 text-gray-300">
-              <li>
-                <Link href="/services" className="hover:text-primary transition-colors">
-                  Reefer Transport
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-primary transition-colors">
-                  Cold Storage
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-primary transition-colors">
-                  Pharma Logistics
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-primary transition-colors">
-                  Express Delivery
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-primary transition-colors">
-                  Pan-India Coverage
-                </Link>
-              </li>
+            <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              What we do
+            </h4>
+            <p className="mb-4 text-base font-semibold text-white">Services</p>
+            <ul className="space-y-2">
+              {serviceLinks.map((service) => (
+                <li key={service.label}>
+                  <Link
+                    href={service.href}
+                    className="text-sm text-white/65 transition hover:text-white"
+                  >
+                    {service.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 4: Contact */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">Contact Info</h4>
-            <div className="space-y-4 text-gray-300">
+            <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              Reach us
+            </h4>
+            <p className="mb-4 text-base font-semibold text-white">Contact</p>
+            <div className="space-y-3.5">
               <div className="flex gap-3">
-                <MapPin size={20} className="text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <p className="font-semibold">Bhiwandi, Maharashtra</p>
-                  <p className="text-sm">India</p>
+                <MapPin size={16} className="mt-0.5 shrink-0 text-primary" />
+                <p className="text-sm leading-relaxed text-white/65">{contact.address.short}</p>
+              </div>
+              <div className="flex gap-3">
+                <Phone size={16} className="mt-0.5 shrink-0 text-primary" />
+                <div className="space-y-0.5">
+                  {contact.phones.map((phone) => (
+                    <a
+                      key={phone.tel}
+                      href={`tel:${phone.tel}`}
+                      className="block text-sm text-white/65 transition hover:text-white"
+                    >
+                      +91 {phone.display}
+                    </a>
+                  ))}
                 </div>
               </div>
-              <div className="flex gap-3">
-                <Phone size={20} className="text-primary flex-shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-primary transition-colors">
-                  +91 98765 43210
-                </a>
-              </div>
-              <div className="flex gap-3">
-                <Mail size={20} className="text-primary flex-shrink-0" />
-                <a href="mailto:info@accs.in.net" className="hover:text-primary transition-colors">
-                  info@accs.in.net
+              <div className="flex items-center gap-3">
+                <Mail size={16} className="shrink-0 text-primary" />
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="break-all text-sm text-white/65 transition hover:text-white"
+                >
+                  {contact.email}
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Anshika Cool Container Services. All rights reserved.</p>
+        <div className="flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-5 text-center sm:flex-row sm:text-left">
+          <p className="text-xs text-white/45">
+            &copy; {new Date().getFullYear()} Anshika Cool Container Services. All rights reserved.
+          </p>
+          <p className="text-xs text-white/40">Bhiwandi · Cold Chain · Pan-India Reefer Transport</p>
         </div>
       </div>
     </footer>

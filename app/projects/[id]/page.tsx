@@ -39,19 +39,19 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         ]}
       />
 
-      <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 space-y-8">
-            <div className="relative h-80 md:h-[420px] rounded-xl overflow-hidden bg-gray-300">
+      <section className="px-4 py-10 sm:px-6 md:py-28 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
+          <div className="space-y-8 lg:col-span-2">
+            <div className="relative h-52 overflow-hidden rounded-xl bg-gray-300 sm:h-80 md:h-[420px]">
               <Image src={project.image} alt={project.title} fill className="object-cover" priority />
             </div>
 
-            <div className="bg-white rounded-xl shadow-md p-8">
-              <span className="inline-flex bg-primary text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">
+            <div className="rounded-xl bg-white p-5 shadow-md sm:p-8">
+              <span className="mb-4 inline-flex rounded-full bg-primary px-4 py-1 text-sm font-semibold text-white">
                 {project.category}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">{project.title}</h2>
-              <p className="text-text-body text-lg leading-relaxed mb-8">{project.description}</p>
+              <h2 className="mb-4 text-2xl font-bold text-text-dark md:text-4xl">{project.title}</h2>
+              <p className="mb-8 text-base leading-relaxed text-text-body md:text-lg">{project.description}</p>
 
               <h3 className="text-xl font-bold text-text-dark mb-4">Project Highlights</h3>
               <ul className="space-y-3 text-text-body">

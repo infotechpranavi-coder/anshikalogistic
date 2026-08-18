@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Service } from '@/lib/types';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 interface ServiceCardProps extends Service {
   variant?: 'default' | 'large';
@@ -13,72 +13,54 @@ export default function ServiceCard({
   description,
   features,
   image,
-  icon: _icon,
   number,
   variant = 'default',
 }: ServiceCardProps) {
   if (variant === 'large') {
     return (
-      <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
-        {/* Image */}
-        <div className="relative h-64 overflow-hidden bg-gray-300">
+      <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_10px_32px_rgba(26,26,46,0.07)] ring-1 ring-black/[0.04] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(26,26,46,0.1)]">
+        <div className="relative h-44 overflow-hidden">
           <Image
             src={image}
             alt={title}
             fill
-            className="object-cover hover:scale-105 transition-transform duration-300"
+            className="object-cover transition duration-500 group-hover:scale-105"
           />
-          <div className="absolute top-4 left-4 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-bold">
+          <span className="absolute left-4 top-4 rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold tracking-wider text-white">
             {number}
-          </div>
+          </span>
         </div>
-
-        {/* Content */}
-        <div className="p-8">
-          <h3 className="text-2xl font-bold text-text-dark mb-3">{title}</h3>
-          <p className="text-text-body mb-6">{description}</p>
-
-          {/* Features */}
-          <div className="mb-8">
-            <h4 className="font-bold text-text-dark mb-4">Key Features:</h4>
-            <ul className="space-y-2">
-              {features.map((feature, idx) => (
-                <li key={idx} className="flex items-center gap-3 text-text-body">
-                  <span className="w-2 h-2 bg-primary rounded-full" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CTA */}
+        <div className="flex flex-1 flex-col p-5">
+          <h3 className="mb-2 text-lg font-semibold text-text-dark">{title}</h3>
+          <p className="mb-4 text-sm leading-relaxed text-text-body">{description}</p>
+          <ul className="mb-5 space-y-1.5">
+            {features.slice(0, 3).map((feature) => (
+              <li key={feature} className="flex items-center gap-2 text-sm text-text-body">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                {feature}
+              </li>
+            ))}
+          </ul>
           <Link
             href={`/services/${id}`}
-            className="inline-flex items-center gap-2 text-primary font-bold hover:opacity-70 transition-opacity"
+            className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
           >
             View Details
-            <ArrowRight size={18} />
+            <ArrowUpRight size={15} />
           </Link>
         </div>
-      </div>
+      </article>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-      <div className="flex items-start gap-4 mb-4">
-        <div className="text-primary flex-shrink-0">
-          {/* Icon would go here if available */}
-          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
-            {number}
-          </div>
-        </div>
-        <h3 className="text-lg font-bold text-text-dark">{title}</h3>
-      </div>
-      <p className="text-text-body text-sm mb-4">{description}</p>
-      <Link href={`/services/${id}`} className="text-primary font-semibold hover:opacity-70">
+    <article className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-black/[0.04]">
+      <p className="mb-2 text-[11px] font-semibold tracking-[0.16em] text-primary">{number}</p>
+      <h3 className="mb-2 text-lg font-semibold text-text-dark">{title}</h3>
+      <p className="mb-4 text-sm text-text-body">{description}</p>
+      <Link href={`/services/${id}`} className="text-sm font-semibold text-primary">
         View Details
       </Link>
-    </div>
+    </article>
   );
 }

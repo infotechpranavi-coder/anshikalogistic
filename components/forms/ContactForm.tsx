@@ -119,10 +119,10 @@ export default function ContactForm() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="">Select container type</option>
-            <option value="20ft">20ft Reefer Container</option>
-            <option value="40ft">40ft Reefer Container</option>
-            <option value="van">Insulated Van</option>
-            <option value="mini">Mini Reefer Unit</option>
+            <option value="9ft">9 ft Reefer</option>
+            <option value="14ft">14 ft Reefer</option>
+            <option value="20ft">20 ft Reefer</option>
+            <option value="24ft">24 ft Reefer</option>
           </select>
         </div>
 

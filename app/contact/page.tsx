@@ -1,61 +1,75 @@
 import PageHeader from '@/components/PageHeader';
 import ContactForm from '@/components/forms/ContactForm';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
-
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: 'Address',
-    details: 'Bhiwandi, Maharashtra, India',
-  },
-  {
-    icon: Phone,
-    title: 'Phone',
-    details: '+91 98765 43210',
-    href: 'tel:+919876543210',
-  },
-  {
-    icon: Mail,
-    title: 'Email',
-    details: 'info@accs.in.net',
-    href: 'mailto:info@accs.in.net',
-  },
-  {
-    icon: Clock,
-    title: 'Business Hours',
-    details: '24/7 Available',
-  },
-];
+import { contact } from '@/lib/contact';
 
 export default function ContactPage() {
   return (
     <>
       <PageHeader title="Contact Us" />
 
-      <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <section className="section-padding bg-white">
+        <div className="section-container">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="text-3xl font-bold text-text-dark mb-8">Get in Touch</h2>
+              <h2 className="mb-6 text-2xl font-bold text-text-dark md:mb-8 md:text-3xl">Get in Touch</h2>
               <div className="space-y-6">
-                {contactInfo.map((info, idx) => (
-                  <a
-                    key={idx}
-                    href={info.href}
-                    className="flex gap-4 group"
-                  >
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white flex-shrink-0 group-hover:opacity-80 transition-opacity">
-                      <info.icon size={24} />
+                {/* Address */}
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                    <MapPin size={24} />
+                  </div>
+                  <div>
+                    <p className="mb-1 font-bold text-text-dark">Address</p>
+                    <p className="leading-relaxed text-text-body">{contact.address.full}</p>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                    <Phone size={24} />
+                  </div>
+                  <div>
+                    <p className="mb-1 font-bold text-text-dark">Phone</p>
+                    <div className="space-y-1">
+                      {contact.phones.map((phone) => (
+                        <a
+                          key={phone.tel}
+                          href={`tel:${phone.tel}`}
+                          className="block text-text-body transition-colors hover:text-primary"
+                        >
+                          +91 {phone.display}
+                        </a>
+                      ))}
                     </div>
-                    <div>
-                      <p className="font-bold text-text-dark mb-1">{info.title}</p>
-                      <p className="text-text-body group-hover:text-primary transition-colors">
-                        {info.details}
-                      </p>
-                    </div>
-                  </a>
-                ))}
+                  </div>
+                </div>
+
+                {/* Email */}
+                <a href={`mailto:${contact.email}`} className="group flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white transition-opacity group-hover:opacity-80">
+                    <Mail size={24} />
+                  </div>
+                  <div>
+                    <p className="mb-1 font-bold text-text-dark">Email</p>
+                    <p className="text-text-body transition-colors group-hover:text-primary">
+                      {contact.email}
+                    </p>
+                  </div>
+                </a>
+
+                {/* Hours */}
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                    <Clock size={24} />
+                  </div>
+                  <div>
+                    <p className="mb-1 font-bold text-text-dark">Business Hours</p>
+                    <p className="text-text-body">{contact.hours}</p>
+                  </div>
+                </div>
               </div>
 
               {/* Quick Tips */}
@@ -80,8 +94,8 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
-                <h2 className="text-3xl font-bold text-text-dark mb-2">Send us a Message</h2>
+              <div className="rounded-2xl bg-white p-5 shadow-[0_12px_36px_rgba(26,26,46,0.08)] sm:p-8 md:p-10">
+                <h2 className="mb-2 text-2xl font-bold text-text-dark md:text-3xl">Send us a Message</h2>
                 <p className="text-gray-600 mb-8">
                   Fill out the form below and our team will get back to you within 24 hours.
                 </p>
@@ -93,19 +107,29 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-light-gray">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-text-dark mb-8 text-center">Our Location</h2>
-          <div className="relative w-full h-96 bg-gray-300 rounded-lg overflow-hidden">
-            {/* Placeholder for Google Maps */}
+      <section className="bg-light-gray px-4 py-10 sm:px-6 md:py-16 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-3 text-center text-2xl font-bold text-text-dark md:text-3xl">Our Location</h2>
+          <p className="mb-3 text-center text-text-body">{contact.address.short}</p>
+          <p className="mb-6 text-center">
+            <a
+              href={contact.mapDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+            >
+              <MapPin size={15} />
+              Open in Google Maps
+            </a>
+          </p>
+          <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-sm ring-1 ring-black/5 md:h-[28rem]">
             <iframe
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.3516827405923!2d73.06289!3d19.261842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc7c1c1c1c1c1c1%3A0x0!2sBhiwandi!5e0!3m2!1sen!2sin!4v1234567890"
-              allowFullScreen
+              src={contact.mapEmbedUrl}
+              className="absolute inset-0 h-full w-full border-0"
               loading="lazy"
+              allowFullScreen
               referrerPolicy="no-referrer-when-downgrade"
+              title="Anshika Logistics office location in Purna, Bhiwandi"
             />
           </div>
         </div>

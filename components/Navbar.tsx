@@ -4,134 +4,188 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === '/';
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hash, setHash] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
+    const syncHash = () => setHash(window.location.hash);
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+    return () => window.removeEventListener('hashchange', syncHash);
+  }, [pathname]);
+
+  useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
-    { name: 'Projects', href: '/projects' },
+    { name: 'Industries', href: '/industries' },
+    { name: 'Fleet', href: '/fleet' },
     { name: 'Contact', href: '/contact' },
   ];
 
   const overHero = isHome && !scrolled && !isOpen;
-  const linkClass = overHero
-    ? 'text-white/90 hover:text-white transition-colors font-medium'
-    : 'text-gray-600 hover:text-primary transition-colors font-medium';
 
   return (
     <>
       <nav
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          overHero
-            ? 'bg-transparent'
-            : 'bg-white shadow-md'
+        className={`fixed top-0 z-50 w-full transition-all duration-500 ${
+          overHero ? 'bg-transparent' : 'bg-white/95 shadow-sm backdrop-blur-md'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-24">
-            <Link href="/" className="flex items-center gap-2 font-bold text-xl relative z-10">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-6">
+          <div className="relative flex items-center justify-between py-2.5 md:py-2">
+            {/* Logo */}
+            <Link href="/" className="relative z-10 -ml-1 flex shrink-0 items-center overflow-visible">
               <Image
-                src="/logo/anishka%20logists.jpeg"
-                alt="Anshika logo"
-                width={86}
-                height={86}
-                className={`h-14 w-auto object-contain transition-all duration-500 ${
-                  overHero ? 'brightness-110 drop-shadow-lg' : ''
+                src="/logo/anshika%20logictics.png"
+                alt="Anshika Logistics"
+                width={320}
+                height={320}
+                className={`-my-1 h-[4.75rem] w-auto origin-left object-contain object-left transition-all duration-500 sm:h-[5.25rem] md:-my-3 md:h-[6.75rem] ${
+                  overHero
+                    ? 'brightness-0 invert drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]'
+                    : ''
                 }`}
                 priority
               />
             </Link>
 
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} className={linkClass}>
-                  {link.name}
-                </Link>
-              ))}
+            {/* Center tab nav — desktop */}
+            <div
+              className={`absolute left-1/2 hidden -translate-x-1/2 items-center rounded-full p-1 md:flex ${
+                overHero
+                  ? 'border border-white/20 bg-white/10 backdrop-blur-md'
+                  : 'border border-gray-200/80 bg-gray-100/90 shadow-sm'
+              }`}
+            >
+              {navLinks.map((link) => {
+                const active = link.href.startsWith('/#')
+                  ? isHome && hash === link.href.replace('/', '')
+                  : link.href === '/'
+                    ? isHome && !hash
+                    : pathname === link.href || pathname.startsWith(`${link.href}/`);
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`relative rounded-full px-4 py-2.5 text-[15px] font-semibold transition-all duration-200 lg:px-5 lg:text-base ${
+                      active
+                        ? overHero
+                          ? 'bg-white text-text-dark shadow-sm'
+                          : 'bg-white text-primary shadow-sm'
+                        : overHero
+                          ? 'text-white/90 hover:text-white'
+                          : 'text-text-body hover:text-text-dark'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </div>
 
-            <div className="flex items-center gap-4">
-              <button
-                className={`hidden sm:flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
-                  overHero ? 'hover:bg-white/15' : 'hover:bg-light-gray'
-                }`}
-                aria-label="Search"
-              >
-                <Search
-                  size={20}
-                  className={overHero ? 'text-white' : 'text-gray-600'}
-                />
-              </button>
+            {/* Right actions */}
+            <div className="relative z-10 flex items-center gap-2">
               <Link
                 href="/contact"
-                className="hidden sm:block btn-primary text-sm"
+                className={`hidden items-center gap-1 rounded-full px-5 py-2.5 text-sm font-semibold transition sm:inline-flex ${
+                  overHero
+                    ? 'bg-primary text-white shadow-lg shadow-black/20 hover:bg-[var(--primary-dark)]'
+                    : 'bg-primary text-white hover:bg-[var(--primary-dark)]'
+                }`}
               >
-                Free Quote
+                Enquire Now
+                <ArrowUpRight size={15} className="opacity-90" />
               </Link>
 
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden p-2"
+                className={`rounded-full p-2.5 md:hidden ${
+                  overHero && !isOpen
+                    ? 'border border-white/25 bg-white/10 text-white backdrop-blur-sm'
+                    : 'text-text-dark'
+                }`}
                 aria-label="Toggle menu"
               >
-                {isOpen ? (
-                  <X size={24} className="text-gray-800" />
-                ) : (
-                  <Menu size={24} className={overHero ? 'text-white' : 'text-gray-800'} />
-                )}
+                {isOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 100 }}
-          className="fixed inset-0 top-24 bg-white z-40 md:hidden overflow-y-auto"
-        >
-          <div className="p-6 space-y-4">
-            {navLinks.map((link) => (
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 top-[5.5rem] z-40 overflow-y-auto bg-white md:hidden"
+          >
+            <div className="section-container py-5">
+              <div className="mb-4 flex flex-col gap-1 rounded-2xl bg-light-gray p-1.5">
+                {navLinks.map((link) => {
+                  const active = link.href.startsWith('/#')
+                    ? isHome && hash === link.href.replace('/', '')
+                    : link.href === '/'
+                      ? isHome && !hash
+                      : pathname === link.href || pathname.startsWith(`${link.href}/`);
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`rounded-xl px-4 py-3.5 text-center text-base font-semibold transition ${
+                        active
+                          ? 'bg-white text-primary shadow-sm'
+                          : 'text-text-body hover:bg-white/60'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
+              </div>
               <Link
-                key={link.name}
-                href={link.href}
+                href="/contact"
                 onClick={() => setIsOpen(false)}
-                className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors"
+                className="btn-primary flex w-full items-center justify-center gap-1.5 rounded-full py-3"
               >
-                {link.name}
+                Enquire Now
+                <ArrowUpRight size={16} />
               </Link>
-            ))}
-            <Link href="/contact" className="w-full btn-primary mt-6 block text-center">
-              Free Quote
-            </Link>
-          </div>
-        </motion.div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Spacer only on non-home pages so hero can sit under transparent nav */}
-      {!isHome && <div className="h-24" />}
+      {!isHome && <div className="h-[5.5rem] md:h-[6.25rem]" />}
     </>
   );
 }
