@@ -28,7 +28,7 @@ export default function AboutSection() {
               <div className="col-span-3 flex flex-col gap-3 sm:gap-4">
                 <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-sm">
                   <Image
-                    src="/fleet/truck-01.jpg"
+                    src="/fleetssss/WhatsApp Image 2026-08-23 at 9.15.05 PM.jpeg"
                     alt="Anshika Logistics refrigerated container"
                     fill
                     className="object-cover"
@@ -37,7 +37,7 @@ export default function AboutSection() {
                 </div>
                 <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-sm">
                   <Image
-                    src="/fleet/truck-02.jpg"
+                    src="/fleet/truck-01.jpg"
                     alt="Anshika Logistics reefer truck"
                     fill
                     className="object-cover"
@@ -48,7 +48,7 @@ export default function AboutSection() {
 
               <div className="relative col-span-2 min-h-[220px] overflow-hidden rounded-2xl shadow-sm sm:min-h-[260px]">
                 <Image
-                  src="/fleet/truck-03.jpg"
+                  src="/fleetssss/WhatsApp Image 2026-08-23 at 9.15.07 PM.jpeg"
                   alt="Anshika Logistics Eicher reefer fleet"
                   fill
                   className="object-cover object-center"

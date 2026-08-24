@@ -29,7 +29,7 @@ export const services: Service[] = [
     description:
       'Choose from 9 ft, 14 ft, 20 ft, and 24 ft reefer vehicles to suit your load and lane.',
     features: ['Multiple vehicle sizes', 'Right-fit capacity', 'Urban & highway routes'],
-    image: '/fleet/truck-09.jpg',
+    image: '/fleetssss/WhatsApp Image 2026-08-23 at 9.15.08 PM.jpeg',
   },
   {
     id: '4',
